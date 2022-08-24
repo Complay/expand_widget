@@ -9,6 +9,8 @@ const Duration _kExpand = Duration(milliseconds: 300);
 /// This widget unfolds a hidden widget to the user, called [child].
 /// This action is performed when the user clicks the 'expand' arrow.
 class ExpandChild extends StatefulWidget {
+  /// Is default expanded
+  final bool isExpanded;
   /// Message used as a tooltip when the widget is minimized.
   /// Default value set to [MaterialLocalizations.of(context).collapsedIconTapHint].
   final String? collapsedHint;
@@ -59,6 +61,7 @@ class ExpandChild extends StatefulWidget {
 
   const ExpandChild({
     Key? key,
+    this.isExpanded = false,
     this.collapsedHint,
     this.expandedHint,
     this.arrowPadding,
@@ -103,9 +106,12 @@ class _ExpandChildState extends State<ExpandChild>
   void initState() {
     super.initState();
 
+    _isExpanded = widget.isExpanded;
+
     // Initializing the animation controller with the [duration] parameter
     _controller = AnimationController(
       duration: widget.animationDuration,
+      value: _isExpanded? 1.0 : 0,
       vsync: this,
     );
 
